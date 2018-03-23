@@ -4,63 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Publics\CheckoutModel;
+use Lang;
 use App\Cart;
 
-class CartController extends Controller
+class CheckoutController extends Controller
 {
   /**
    * Display a listing of the resource.
    *
    * @return \Illuminate\Http\Response
    */
-
-   private $cart;
- public function __construct()
- {
-     $this->cart = new Cart();
- }
- public function addProduct(Request $request)
- {
-     if (!$request->ajax()) {
-         abort(404);
-     }
-     $post = $request->all();
-     $quantity = (int) $post['quantity'];
-     if ($quantity == 0) {
-         $quantity = 1;
-     }
-     $this->cart->addProduct($post['id'], $quantity);
- }
- public function renderCartProductsWithHtml(Request $request)
- {
-     if (!$request->ajax()) {
-         abort(404);
-     }
-     echo json_encode(array(
-         'html' => $this->cart->getCartHtmlWithProducts(),
-         'num_products' => $this->cart->countProducts
-     ));
- }
- public function removeProductQuantity(Request $request)
- {
-     if (!$request->ajax()) {
-         abort(404);
-     }
-     $post = $request->all();
-     $this->cart->removeProductQuantity($post['id']);
- }
- public function getProductsForCheckoutPage(Request $request)
- {
-     if (!$request->ajax()) {
-         abort(404);
-     }
-     echo $this->cart->getCartHtmlWithProductsForCheckoutPage();
- }
   public function index()
   {
-      //
+    return view('publics.checkout', [
+           'cartProducts' => $this->products,
+           'head_title' => Lang::get('seo.title_checkout'),
+           'head_description' => Lang::get('soe.descr_checkout')
+       ]);
   }
 
+  public function setOrder(Request $request)
+     {
+       $post = $request->all();
+     $checkoutModel = new CheckoutModel();
+     $checkoutModel->setOrder($post);
+     $cart = new Cart();
+     $cart->clearCart();
+     return redirect(lang_url('/'))->with(['msg' => Lang::get('public_pages.order_accepted'), 'result' => true]);
   /**
    * Show the form for creating a new resource.
    *
@@ -81,6 +52,13 @@ class CartController extends Controller
   {
       //
   }
+
+  public function setFastOrder(Request $request)
+      {
+        $post = $request->all();
+   $checkoutModel = new CheckoutModel();
+   $checkoutModel->setFastOrder($post);
+   return redirect(lang_url('/'))->with(['msg' => Lang::get('public_pages.order_accepted'), 'result' => true]);
 
   /**
    * Display the specified resource.
@@ -122,12 +100,8 @@ class CartController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-   public function removeProduct(Request $request)
-     {
-         if (!$request->ajax()) {
-             abort(404);
-         }
-         $post = $request->all();
-         $this->cart->removeProduct($post['id']);
-     }
+  public function destroy($id)
+  {
+      //
+  }
 }

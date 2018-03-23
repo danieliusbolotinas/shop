@@ -9,8 +9,9 @@ use Storage;
 use Config;
 use Lang;
 
-class Carousel extends Model
+class CarouselModel extends Model
 {
+  
 private $post;
 private $defaultLang;
 private $id;

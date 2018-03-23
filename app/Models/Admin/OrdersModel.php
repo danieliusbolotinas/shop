@@ -3,6 +3,7 @@ namespace App\Models\Admin;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Validation\Rule;
+
 class OrdersModel extends Model
 {
     private $post;

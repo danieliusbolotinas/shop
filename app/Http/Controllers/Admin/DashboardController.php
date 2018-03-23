@@ -16,13 +16,15 @@
        */
       public function index()
       {
-      $oredersModel = new OrdersModel();
-      $ordersByMonth = $oredersModel->getOrdersByMonth();
-      return view('admin.dashboard', [
-         'page_title_lang' => Lang::get('admin_pages.dashboard'),
-         'ordersByMonth' => $ordersByMonth
-     ]);
-      }
+        $oredersModel = new OrdersModel();
+         $ordersByMonth = $oredersModel->getOrdersByMonth();
+         return view('admin.dashboard', [
+             'page_title_lang' => Lang::get('admin_pages.dashboard'),
+             'ordersByMonth' => $ordersByMonth
+         ]);
+     }
+
+
 
       /**
        * Show the form for creating a new resource.

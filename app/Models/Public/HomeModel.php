@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Home extends Model
+class HomeModel extends Model
 {
 
   public function getCarouselSliders()

@@ -9,8 +9,9 @@ use Config;
 use Lang;
 use Storage;
 
-class Publish extends Model
+class PublishModel extends Model
 {
+  
 private $defaultLang;
 private $post = [];
 private $nameOfProduct;

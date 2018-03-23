@@ -4,57 +4,67 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Lang;
-use App\Models\Admin\OrdersModel;
-use App\Models\Publics\ProductsModel;
+use App\Cart;
 
-class OrdersController extends Controller
+class CartController extends Controller
 {
 /**
  * Display a listing of the resource.
  *
  * @return \Illuminate\Http\Response
  */
-public function index(Request $request)
+
+ private $cart;
+public function __construct()
 {
-  $ordersModel = new OrdersModel();
-       $orders = $ordersModel->getOrders();
-       $fastOrders = $ordersModel->getFastOrders();
-       return view('admin.orders', [
-           'page_title_lang' => Lang::get('admin_pages.orders'),
-           'orders' => $orders,
-           'fastOrders' => $fastOrders,
-           'controller' => $this
-       ]);
+   $this->cart = new Cart();
 }
 
-public function changeStatus(Request $request)
-   {
-     if (!$request->ajax()) {
+public function addProduct(Request $request)
+{
+ if (!$request->ajax()) {
        abort(404);
    }
    $post = $request->all();
-   $ordersModel = new OrdersModel();
-   $ordersModel->setNewStatus($post);
+   $quantity = (int) $post['quantity'];
+   if ($quantity == 0) {
+       $quantity = 1;
    }
+   $this->cart->addProduct($post['id'], $quantity);
+}
 
-   public function getProductInfo($id)
-   {
-     $productsModel = new ProductsModel();
-   $product = $productsModel->getProduct($id);
-   return $product;
-   }
+public function renderCartProductsWithHtml(Request $request)
+{
+ if (!$request->ajax()) {
+        abort(404);
+    }
+    echo json_encode(array(
+        'html' => $this->cart->getCartHtmlWithProducts(),
+        'num_products' => $this->cart->countProducts
+    ));
+}
 
-   public function markFastOrder(Request $request)
-   {
-     if (isset($request->id) && (int) $request->id > 0) {
-       $ordersModel = new OrdersModel();
-       $ordersModel->setFastOrderAsViewed($request->id);
-       return redirect(lang_url('admin/orders'))->with(['msg' => Lang::get('admin_pages.fast_order_marked'), 'result' => true]);
-   } else {
+public function removeProductQuantity(Request $request)
+{
+ if (!$request->ajax()) {
        abort(404);
    }
-   }
+   $post = $request->all();
+   $this->cart->removeProductQuantity($post['id']);
+}
+
+public function getProductsForCheckoutPage(Request $request)
+{
+ if (!$request->ajax()) {
+        abort(404);
+    }
+    echo $this->cart->getCartHtmlWithProductsForCheckoutPage();
+}
+public function index()
+{
+    //
+}
+
 /**
  * Show the form for creating a new resource.
  *
@@ -116,8 +126,12 @@ public function update(Request $request, $id)
  * @param  int  $id
  * @return \Illuminate\Http\Response
  */
-public function destroy($id)
-{
-    //
-}
+ public function removeProduct(Request $request)
+   {
+     if (!$request->ajax()) {
+         abort(404);
+     }
+     $post = $request->all();
+     $this->cart->removeProduct($post['id']);
+   }
 }

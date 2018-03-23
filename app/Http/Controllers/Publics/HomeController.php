@@ -4,36 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Admin\ProductsModel;
+use App\Models\Publics\ProductsModel;
+use App\Models\Publics\HomeModel;
 use Lang;
 
-class ProductController extends Controller
+class HomeController extends Controller
 {
 /**
  * Display a listing of the resource.
  *
  * @return \Illuminate\Http\Response
  */
-public function index(Request $request)
+public function index()
 {
   $productsModel = new ProductsModel();
-       $products = $productsModel->getProducts($request);
-       return view('admin.products', [
-           'page_title_lang' => Lang::get('admin_pages.products_list'),
-           'products' => $products
-       ]);
+      $homeModel = new HomeModel();
+      $promoProducts = $productsModel->getProductsWithTags(['promo']);
+      $mostSelledProducts = $productsModel->getMostSelledProducts();
+      $carousel = $homeModel->getCarouselSliders();
+      return view('publics.home', [
+          'promoProducts' => $promoProducts,
+          'mostSelledProducts' => $mostSelledProducts,
+          'carousel' => $carousel,
+          'cartProducts' => $this->products,
+          'head_title' => Lang::get('seo.title_home'),
+          'head_description' => Lang::get('seo.descr_home')
+      ]);
 }
-
-public function deleteProduct(Request $request)
-    {
-      if (isset($request->number) && (int) $request->number > 0) {
-        $productsModel = new ProductsModel();
-        $productsModel->deleteProduct($request->number);
-        return redirect(lang_url('admin/products'))->with(['msg' => Lang::get('admin_pages.product_is_deleted'), 'result' => true]);
-    } else {
-        abort(404);
-    }
-    }
+}
 
 /**
  * Show the form for creating a new resource.
