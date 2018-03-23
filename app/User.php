@@ -1,9 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models\Admin;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Validation\Rule;
+use Hash;
 
 class User extends Authenticatable
 {
