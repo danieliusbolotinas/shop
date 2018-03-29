@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Publics;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -31,7 +31,7 @@ public function index()
           'head_description' => Lang::get('seo.descr_home')
       ]);
 }
-}
+
 
 /**
  * Show the form for creating a new resource.

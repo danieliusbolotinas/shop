@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+
 use App\Models\Publics\ProductsModel;
 /**
 * This class manage shopping cart of users
@@ -74,9 +75,11 @@ class Cart
 
   public function getCartProducts()
   {
-      $productsModel = new ProductsModel();
+       $productsModel = new ProductsModel();
+
       $products_ids = $this->getCartProductsIds();
       $unique_ids = array_unique($products_ids);
+
       $products = [];
       if (!empty($products_ids)) {
           $products = $productsModel->getProductsWithIds($unique_ids);
@@ -107,7 +110,7 @@ class Cart
       }
   }
 
-  
+
   public function getCartHtmlWithProductsForCheckoutPage()
   {
       $products = $this->getCartProducts();

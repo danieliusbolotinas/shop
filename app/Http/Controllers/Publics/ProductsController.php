@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Publics\ProductsModel;
 use Lang;
 
-class ProductController extends Controller
+class ProductsController extends Controller
 {
 /**
  * Display a listing of the resource.

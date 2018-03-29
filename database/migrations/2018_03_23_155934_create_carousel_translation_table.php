@@ -15,9 +15,9 @@ class CreateCarouselTranslationTable extends Migration
     {
         Schema::create('carousel_translation', function (Blueprint $table) {
           $table->integer('position')->unsigned()->nullable(false)->default(1);
-          $table->integer('for_id',10)->unsigned()->nullable(false);
-          $table->string('image', 255)->nullable(false);
-          $table->string('locale', 5)->nullable(false);
+          $table->integer('for_id',10);
+          $table->string('image', 255);
+          $table->string('locale', 5);
           $table->increments('id');
           $table->timestamps();
         });

@@ -8,13 +8,9 @@
   use Lang;
   use Config;
 
-  class ProductCategoryController extends Controller
+  class ProductsCategoryController extends Controller
   {
-      /**
-       * Display a listing of the resource.
-       *
-       * @return \Illuminate\Http\Response
-       */
+      
       public function index(Request $reques)
       {
         $category = null;

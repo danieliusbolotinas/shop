@@ -16,7 +16,7 @@ class CreateFastOrdersTable extends Migration
         Schema::create('fast_orders', function (Blueprint $table) {
           $table->string('phone',50)->nullable(false);
           $table->string('names',100)->nullable(false);
-          $table->timestamp('time_created')->nullable(false)->default();
+          // $table->timestamp('time_created')->nullable(false)->default();
           $table->tinyint('status', 4)->nullable(false)->default(0);
           $table->increments('id');
           $table->timestamps();

@@ -24,9 +24,11 @@ class MultiLanguage
       $segment = request()->segment(1);
       $lang = Config::get('app.locale'); // get default locale
       $supportedLocales = Config::get('app.locales');
-      if (in_array($segment, $supportedLocales)) {
+      if (is_array($supportedLocales)){
+        if (in_array($segment, $supportedLocales)) {
         $lang = $segment;
       }
+    }
       App::setLocale($lang);
       return $next($request);
   }
