@@ -14,11 +14,11 @@ class CreateFastOrdersTable extends Migration
     public function up()
     {
         Schema::create('fast_orders', function (Blueprint $table) {
-          $table->string('phone',50)->nullable(false);
-          $table->string('names',100)->nullable(false);
-          // $table->timestamp('time_created')->nullable(false)->default();
-          $table->tinyint('status', 4)->nullable(false)->default(0);
           $table->increments('id');
+          $table->string('phone',50);
+          $table->string('names',100);
+          // $table->timestamp('time_created')->nullable(false)->default();
+          // $table->tinyint('status', 4)->default(0);
           $table->timestamps();
         });
     }

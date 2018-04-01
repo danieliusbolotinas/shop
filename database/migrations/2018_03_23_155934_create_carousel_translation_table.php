@@ -14,11 +14,11 @@ class CreateCarouselTranslationTable extends Migration
     public function up()
     {
         Schema::create('carousel_translation', function (Blueprint $table) {
-          $table->integer('position')->unsigned()->nullable(false)->default(1);
-          $table->integer('for_id',10);
+          // $table->increments('id');
+          $table->integer('position');
+          $table->integer('for', 10);
           $table->string('image', 255);
           $table->string('locale', 5);
-          $table->increments('id');
           $table->timestamps();
         });
     }

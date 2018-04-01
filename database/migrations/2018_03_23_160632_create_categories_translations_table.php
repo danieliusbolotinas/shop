@@ -14,10 +14,10 @@ class CreateCategoriesTranslationsTable extends Migration
     public function up()
     {
         Schema::create('categories_translations', function (Blueprint $table) {
-            $table->integer('for_id',10)->unsigned()->nullable(false);
-            $table->string('name',100)->nullable(false);
-            $table->string('locale', 5)->nullable(false);
             $table->increments('id');
+            // $table->integer('for',10);
+            $table->string('name',100);
+            $table->string('locale', 5);
             $table->timestamps();
         });
     }

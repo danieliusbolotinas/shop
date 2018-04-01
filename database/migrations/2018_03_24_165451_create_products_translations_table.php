@@ -14,12 +14,12 @@ class CreateProductsTranslationsTable extends Migration
     public function up()
     {
         Schema::create('products_translations', function (Blueprint $table) {
-            $table->integer('for_id', 10)->unsigned()->nullable(false);
-            $table->string('name', 255)->nullable(false);
-            $table->text('description')->nullable(false);
-            $table->string('price', 20)->nullable(false);
-            $table->string('locale', 8)->nullable(false);
             $table->increments('id');
+            // $table->integer('for', 10);
+            $table->string('name', 255);
+            $table->text('description');
+            $table->string('price', 20);
+            $table->string('locale', 8);
             $table->timestamps();
         });
     }

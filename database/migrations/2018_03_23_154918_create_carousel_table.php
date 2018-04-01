@@ -14,9 +14,9 @@ class CreateCarouselTable extends Migration
     public function up()
     {
         Schema::create('carousel', function (Blueprint $table) {
-            $table->integer('position')->unsigned()->nullable(false)->default(1);
-            $table->string('link',255)->nullable(false);
             $table->increments('id');
+            $table->integer('position')->default(1);
+            $table->string('link', 255);
             $table->timestamps();
         });
     }
